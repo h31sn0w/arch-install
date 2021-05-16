@@ -54,6 +54,7 @@ usb_tweaks() {
     mkinitcpio -p linux
     sed -i 's/#Storage=auto/Storage=volatile/g' /etc/systemd/journald.conf
     sed -i 's/#SystemMaxUse=/SystemMaxUse=30M/g' /etc/systemd/journald.conf
+    pacman -S 
 }
 
 install_paru() {
@@ -81,17 +82,20 @@ EOF
     cat > /boot/loader/entries/arch.conf <<EOF
 title   Arch Linux
 linux   /vmlinuz-linux
-initrd  /intel-ucode.img
 initrd  /initramfs-linux.img
 options root="LABEL=arch_os" rw
 EOF
     cat > /boot/loader/entries/arch-fallback.conf <<EOF
 title   Arch Linux (fallback initramfs)
 linux   /vmlinuz-linux
-initrd  /intel-ucode.img
 initrd  /initramfs-linux-fallback.img
 options root="LABEL=arch_os" rw
 EOF
+}
+
+sway() {
+    pacman --no-confirm -S sway swaylock swayidle imv mpv mako swappy grim slurp
+    paru --no-confirm greetd-tuigreet foot dmenu-wayland-git autotiling
 }
 
 set -ex
@@ -100,14 +104,17 @@ if [ "$1" == "chroot" ]
 then
     configuracion
     usb_tweaks
+    echo "ROOT PASSWORD"
+    passwd
     install_paru
     bootloader
+    sway
     user
     rm -f /mnt/arch-install
 else
     config
     prepare_disk
-    pacstrap /mnt linux linux-firmware base base-devel neovim networkmanager git zsh
+    pacstrap /mnt linux linux-firmware base base-devel vim networkmanager git zsh pipewire pipewire-alsa pipewire-pulse
     genfstab -U /mnt >> /mnt/etc/fstab
     chroot
 fi
