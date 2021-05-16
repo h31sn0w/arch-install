@@ -29,10 +29,6 @@ prepare_disk() {
     mount "$DRIVE"2 /mnt/boot
 }
 
-pacstrap() {
-    pacstrap /mnt linux linux-firmware base base-devel neovim networkmanager
-}
-
 chroot() {
     cp $0 /mnt/arch-install.sh
     arch-chroot /mnt ./arch-install.sh chroot
@@ -81,7 +77,7 @@ then
 else
     config
     prepare_disk
-    pacstrap
+    pacstrap /mnt linux linux-firmware base base-devel neovim networkmanager
     genfstab -U /mnt >> /mnt/etc/fstab
     chroot
 fi
