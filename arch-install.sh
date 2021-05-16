@@ -10,7 +10,6 @@ config() {
 }
 
 prepare_disk() {
-    echo "-------------------------- PREPARING DISK --------------------------"
     parted --script $DRIVE \
         mklabel gpt \
 	mkpart primary ext4 512MiB 100% \
@@ -24,7 +23,6 @@ prepare_disk() {
     mount /dev/mapper/h31s /mnt
     mkdir -p /mnt/boot
     mount "$DRIVE"2 /mnt/boot
-    echo "-------------------------- DISK READY --------------------------"
 }
 
 chroot() {
