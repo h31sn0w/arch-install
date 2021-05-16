@@ -53,7 +53,7 @@ EOF
 }
 
 usb_tweaks() {
-    sed -i 's/HOOKS=(base udev autodetect modconf block filesystem keyboard fsck)/HOOKS=(base udev block keyboard autodetect modconf filesystem fsck)/g' /etc/mkinitcpio.conf
+    sed -i 's/HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)/HOOKS=(base udev block keyboard autodetect modconf filesystems fsck)/g' /etc/mkinitcpio.conf
     mkinitcpio -p linux
     sed -i 's/#Storage=auto/Storage=volatile/g' /etc/systemd/journald.conf
     sed -i 's/#SystemMaxUse=/SystemMaxUse=30M/g' /etc/systemd/journald.conf
