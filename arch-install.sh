@@ -27,6 +27,7 @@ prepare_disk() {
     mount /dev/mapper/h31s /mnt
     mkdir -p /mnt/boot
     mount "$DRIVE"2 /mnt/boot
+    echo "DISK READY"
 }
 
 chroot() {
