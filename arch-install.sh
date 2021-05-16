@@ -71,6 +71,27 @@ user() {
 }
 
 bootloader() {
+    bootctl install
+    cat > /boot/loader/loader.conf <<EOF
+default  arch.conf
+timeout  4
+console-mode max
+editor   no
+EOF
+    cat > /boot/loader/entries/arch.conf <<EOF
+title   Arch Linux
+linux   /vmlinuz-linux
+initrd  /intel-ucode.img
+initrd  /initramfs-linux.img
+options root="LABEL=arch_os" rw
+EOF
+    cat > /boot/loader/entries/arch-fallback.conf <<EOF
+title   Arch Linux (fallback initramfs)
+linux   /vmlinuz-linux
+initrd  /intel-ucode.img
+initrd  /initramfs-linux-fallback.img
+options root="LABEL=arch_os" rw
+EOF
 }
 
 set -ex
@@ -80,6 +101,8 @@ then
     configuracion
     usb_tweaks
     install_paru
+    bootloader
+    user
     rm -f /mnt/arch-install
 else
     config
