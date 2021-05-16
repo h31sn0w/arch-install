@@ -78,7 +78,7 @@ then
 else
     config
     prepare_disk
-    pacstrap /mnt linux linux-firmware base base-devel neovim networkmanager
+    pacstrap /mnt linux linux-firmware base base-devel neovim networkmanager git
     genfstab -U /mnt >> /mnt/etc/fstab
     chroot
 fi
