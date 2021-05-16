@@ -52,7 +52,6 @@ usb_tweaks() {
     mkinitcpio -p linux
     sed -i 's/#Storage=auto/Storage=volatile/g' /etc/systemd/journald.conf
     sed -i 's/#SystemMaxUse=/SystemMaxUse=30M/g' /etc/systemd/journald.conf
-    pacman -S 
 }
 
 install_paru() {
