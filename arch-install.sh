@@ -84,7 +84,7 @@ then
 else
     config
     prepare_disk
-    pacstrap /mnt linux linux-firmware base base-devel neovim networkmanager git
+    pacstrap /mnt linux linux-firmware base base-devel neovim networkmanager git zsh
     genfstab -U /mnt >> /mnt/etc/fstab
     chroot
 fi
