@@ -18,7 +18,7 @@ prepare_disk() {
 	set 2 esp on
     echo "encrypting $DRIVE root partition"
     cryptsetup luksFormat "$DRIVE"1
-    cryptsetpu luksOpen "$DRIVE"1 h31s
+    cryptsetup luksOpen "$DRIVE"1 h31s
     echo "formating $DRIVE paritions"
     mkfs.ext4 -O "^has_journal" /dev/mapper/h31s
     mkfs.fat -F 32 "$DRIVE"2
