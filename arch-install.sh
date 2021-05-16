@@ -14,7 +14,7 @@ prepare_disk() {
     parted --script $DRIVE \
         mklabel gpt \
 	mkpart primary ext4 512MiB 100% \
-	mkpart "EFI" fat32 1MiB 512MiB \
+	mkpart EFI fat32 1MiB 512MiB \
 	set 2 esp on
     echo "encrypting $DRIVE root partition"
     cryptsetup luksFormat "$DRIVE"1
