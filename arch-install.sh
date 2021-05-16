@@ -1,6 +1,7 @@
 #!/bin/sh
 
 config() {
+    lsblk
     read -p "drive (/dev/disk): " DRIVE
     HOSTNAME='lemon'
     USER_NAME='h31s'
@@ -12,7 +13,7 @@ prepare_disk() {
     echo "paritioning $DRIVE"
     parted --script $DRIVE \
         mklabel gpt \
-	mkpart "primary" ext4 512MiB 100% \
+	mkpart primary ext4 512MiB 100% \
 	mkpart "EFI" fat32 1MiB 512MiB \
 	set 2 esp on
     echo "encrypting $DRIVE root partition"
