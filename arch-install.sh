@@ -4,7 +4,7 @@ config() {
     lsblk
     read -p "drive (/dev/disk): " DRIVE
     HOSTNAME='lemon'
-    USER_NAME='h31s'
+    USER='h31s'
     TIMEZONE='Europe/Madrid'
     KEYMAP='us'
 }
@@ -63,6 +63,14 @@ install_paru() {
     cd paru
     makepkg --noconfirm -si
     cd /
+}
+
+user() {
+    useradd -m -G wheel -s /bin/zsh $USER
+    passwd $USER
+}
+
+bootloader() {
 }
 
 set -ex
