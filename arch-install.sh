@@ -10,28 +10,25 @@ config() {
 }
 
 prepare_disk() {
-    echo "paritioning $DRIVE"
+    echo "-------------------------- PREPARING DISK --------------------------"
     parted --script $DRIVE \
         mklabel gpt \
 	mkpart primary ext4 512MiB 100% \
 	mkpart EFI fat32 1MiB 512MiB \
 	set 2 esp on
-    echo "encrypting $DRIVE root partition"
     cryptsetup luksFormat "$DRIVE"1
     cryptsetup luksOpen "$DRIVE"1 h31s
-    echo "formating $DRIVE paritions"
-    mkfs.ext4 -O "^has_journal" /dev/mapper/h31s
+    mkfs.ext4 -L arch_os -O "^has_journal" /dev/mapper/h31s
     mkfs.fat -F 32 "$DRIVE"2
-    echo "mounting $DRIVE partitions"
     mkdir -p /mnt
     mount /dev/mapper/h31s /mnt
     mkdir -p /mnt/boot
     mount "$DRIVE"2 /mnt/boot
-    echo "DISK READY"
+    echo "-------------------------- DISK READY --------------------------"
 }
 
 chroot() {
-    cp $0 /mnt/arch-install.sh
+    cp $0 /mnt/arch-install
     arch-chroot /mnt ./arch-install.sh chroot
 }
     
@@ -75,6 +72,7 @@ then
     configuracion
     usb_tweaks
     install_paru
+    rm -f /mnt/arch-install
 else
     config
     prepare_disk
