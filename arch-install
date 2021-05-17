@@ -29,6 +29,7 @@ prepare_disk() {
 
 chroot() {
     cp $0 /mnt/arch-install
+    chmod 777 /mnt/arch-install
     arch-chroot /mnt ./arch-install chroot
 }
     
