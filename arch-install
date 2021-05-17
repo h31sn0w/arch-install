@@ -3,10 +3,10 @@
 config() {
     lsblk
     read -p "drive (/dev/disk): " DRIVE
-    HOSTNAME='lemon'
-    USER='h31s'
-    TIMEZONE='Europe/Madrid'
-    KEYMAP='us'
+    HOSTNAME="lemon"
+    USER="h31s"
+    TIMEZONE="Europe/Madrid"
+    KEYMAP="us"
 }
 
 prepare_disk() {
