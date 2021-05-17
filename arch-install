@@ -106,12 +106,12 @@ set -e
 if [ "$1" == "chroot" ]
 then
     configuracion
+    bootloader
     usb_tweaks
     echo "------------- ROOT PASSWORD -"
     passwd
     user
     install_paru
-    bootloader
     sway
     rm -f /mnt/arch-install
 else
