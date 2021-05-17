@@ -88,13 +88,13 @@ EOF
 title   Arch Linux
 linux   /vmlinuz-linux
 initrd  /initramfs-linux.img
-options root="LABEL=arch_os" rw
+options cryptdevice="LABEL=arch_os":h31s root=/dev/mapper/h31s rw
 EOF
     cat > /boot/loader/entries/arch-fallback.conf <<EOF
 title   Arch Linux (fallback initramfs)
 linux   /vmlinuz-linux
 initrd  /initramfs-linux-fallback.img
-options root="LABEL=arch_os" rw
+options cryptdevice="LABEL=arch_os":h31s root=/dev/mapper/h31s rw
 EOF
 }
 
