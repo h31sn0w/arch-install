@@ -101,7 +101,7 @@ EOF
 sway() {
     echo "--- installing sway stuff -"
     pacman --noconfirm -S sway swaylock swayidle imv mpv mako swappy grim slurp
-    sudo -u $USER paru --noconfirm -S greetd-tuigreet foot dmenu-wayland-git autotiling
+    sudo -u $USER paru --noconfirm -S greetd-tuigreet foot bemenu-wayland autotiling
 }
 
 set -e
