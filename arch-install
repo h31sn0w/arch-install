@@ -61,6 +61,7 @@ install_paru() {
     cd /tmp
     rm -rf /tmp/paru
     git clone https://aur.archlinux.org/paru.git
+    chmod 777 paru
     cd paru
     sudo -u $USER makepkg --noconfirm -si
     cd /
@@ -70,6 +71,7 @@ user() {
     useradd -m -G wheel -s /bin/zsh $USER
     echo "------------- $USER PASSWORD -"
     passwd $USER
+    newperms "%wheel ALL=(ALL) NOPASSWD: ALL"
 }
 
 bootloader() {
@@ -97,7 +99,7 @@ EOF
 
 sway() {
     echo "--- installing sway stuff -"
-    pacman --no-confirm -S sway swaylock swayidle imv mpv mako swappy grim slurp
+    pacman --noconfirm -S sway swaylock swayidle imv mpv mako swappy grim slurp
     sudo -u $USER paru --no-confirm greetd-tuigreet foot dmenu-wayland-git autotiling
 }
 
