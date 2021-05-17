@@ -1,15 +1,8 @@
 #!/bin/sh
 
-config() {
+prepare_disk() {
     lsblk
     read -p "drive (/dev/disk): " DRIVE
-    HOSTNAME="lemon"
-    USER="h31s"
-    TIMEZONE="Europe/Madrid"
-    KEYMAP="us"
-}
-
-prepare_disk() {
     echo "--- PREPARING DISK -"
     parted --script $DRIVE \
         mklabel gpt \
@@ -34,13 +27,13 @@ chroot() {
 }
     
 configuracion() {
-    ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
+    ln -sf /usr/share/zoneinfo/Europe/Madrid /etc/localtime
     hwclock --systohc
     echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
     locale-gen
     echo "LANG=en_US.UTF-8" > /etc/locale.conf
     echo "KEYMAP=us" > /etc/vconsole.conf
-    echo "$HOSTNAME" > /etc/hostname
+    echo "lemon" > /etc/hostname
     cat > /etc/hosts <<EOF
 127.0.0.1 localhost
 ::1       localhost
@@ -64,14 +57,14 @@ install_paru() {
     git clone https://aur.archlinux.org/paru.git
     chmod 777 paru
     cd paru
-    sudo -u $USER makepkg --noconfirm -si
+    sudo -u h31s makepkg --noconfirm -si
     cd /
 }
 
 user() {
-    useradd -m -G wheel -s /bin/zsh $USER
-    echo "------------- $USER PASSWORD -"
-    passwd $USER
+    useradd -m -G wheel -s /bin/zsh h31s
+    echo "------------- h31s PASSWORD -"
+    passwd h31s
     sed -i 's/# %wheel ALL=(ALL) NOPASSWD: ALL/ %wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
 }
 
@@ -111,7 +104,6 @@ then
     install_paru
     rm -f /mnt/arch-install
 else
-    config
     prepare_disk
     pacstrap /mnt linux linux-firmware base base-devel vim networkmanager git zsh
     genfstab -U /mnt >> /mnt/etc/fstab
