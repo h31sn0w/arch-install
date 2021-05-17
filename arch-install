@@ -71,7 +71,7 @@ user() {
     useradd -m -G wheel -s /bin/zsh $USER
     echo "------------- $USER PASSWORD -"
     passwd $USER
-    newperms "%wheel ALL=(ALL) NOPASSWD: ALL"
+    sed -i 's/# %wheel ALL=(ALL) NOPASSWD: ALL/ %wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
 }
 
 bootloader() {
