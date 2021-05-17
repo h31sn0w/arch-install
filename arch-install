@@ -10,6 +10,7 @@ config() {
 }
 
 prepare_disk() {
+    echo "--- PREPARING DISK -"
     parted --script $DRIVE \
         mklabel gpt \
 	mkpart primary ext4 512MiB 100% \
@@ -23,6 +24,7 @@ prepare_disk() {
     mount /dev/mapper/h31s /mnt
     mkdir -p /mnt/boot
     mount "$DRIVE"2 /mnt/boot
+    echo "--- DISK READY -"
 }
 
 chroot() {
@@ -55,20 +57,23 @@ usb_tweaks() {
 }
 
 install_paru() {
+    echo "--- installing paru -"
     cd /tmp
     rm -rf /tmp/paru
     git clone https://aur.archlinux.org/paru.git
     cd paru
-    makepkg --noconfirm -si
+    sudo -u $USER makepkg --noconfirm -si
     cd /
 }
 
 user() {
     useradd -m -G wheel -s /bin/zsh $USER
+    echo "------------- $USER PASSWORD -"
     passwd $USER
 }
 
 bootloader() {
+    echo "--- installing bootloader -"
     bootctl install
     cat > /boot/loader/loader.conf <<EOF
 default  arch.conf
@@ -91,22 +96,23 @@ EOF
 }
 
 sway() {
+    echo "--- installing sway stuff -"
     pacman --no-confirm -S sway swaylock swayidle imv mpv mako swappy grim slurp
-    paru --no-confirm greetd-tuigreet foot dmenu-wayland-git autotiling
+    sudo -u $USER paru --no-confirm greetd-tuigreet foot dmenu-wayland-git autotiling
 }
 
-set -ex
+set -e
 
 if [ "$1" == "chroot" ]
 then
     configuracion
     usb_tweaks
-    echo "ROOT PASSWORD"
+    echo "------------- ROOT PASSWORD -"
     passwd
+    user
     install_paru
     bootloader
     sway
-    user
     rm -f /mnt/arch-install
 else
     config
