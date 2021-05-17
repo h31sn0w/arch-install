@@ -105,7 +105,7 @@ then
     rm -f /mnt/arch-install
 else
     prepare_disk
-    pacstrap /mnt linux linux-firmware base base-devel vim networkmanager git zsh
+    pacstrap /mnt linux linux-firmware base base-devel vim networkmanager git zsh man-db
     genfstab -U /mnt >> /mnt/etc/fstab
     chroot
 fi
