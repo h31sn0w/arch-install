@@ -62,7 +62,7 @@ install_paru() {
 }
 
 user() {
-    useradd -m -G wheel -s /bin/zsh h31s
+    useradd -m -G wheel,video -s /bin/zsh h31s
     echo "------------- h31s PASSWORD -"
     passwd h31s
     sed -i 's/# %wheel ALL=(ALL) NOPASSWD: ALL/ %wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
