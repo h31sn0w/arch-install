@@ -16,9 +16,9 @@ prepare_disk() {
 	mkpart primary ext4 512MiB 100% \
 	mkpart EFI fat32 1MiB 512MiB \
 	set 2 esp on
-    cryptsetup luksFormat "$DRIVE"1
+    cryptsetup luksFormat "$DRIVE"1 --label arch_os
     cryptsetup luksOpen "$DRIVE"1 h31s
-    mkfs.ext4 -L arch_os -O "^has_journal" /dev/mapper/h31s
+    mkfs.ext4 -O "^has_journal" /dev/mapper/h31s
     mkfs.fat -F 32 "$DRIVE"2
     mkdir -p /mnt
     mount /dev/mapper/h31s /mnt
