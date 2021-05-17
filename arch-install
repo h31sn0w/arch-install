@@ -98,12 +98,6 @@ options cryptdevice=LABEL=arch_os:h31s root=/dev/mapper/h31s rw
 EOF
 }
 
-sway() {
-    echo "--- installing sway stuff -"
-    pacman --noconfirm -S sway swaylock swayidle imv mpv mako swappy grim slurp
-    sudo -u $USER paru --noconfirm -S greetd-tuigreet foot bemenu-wayland autotiling
-}
-
 set -e
 
 if [ "$1" == "chroot" ]
@@ -115,12 +109,11 @@ then
     passwd
     user
     install_paru
-    sway
     rm -f /mnt/arch-install
 else
     config
     prepare_disk
-    pacstrap /mnt linux linux-firmware base base-devel vim networkmanager git zsh pipewire pipewire-alsa pipewire-pulse
+    pacstrap /mnt linux linux-firmware base base-devel vim networkmanager git zsh
     genfstab -U /mnt >> /mnt/etc/fstab
     chroot
 fi
