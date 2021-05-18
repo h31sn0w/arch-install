@@ -95,7 +95,7 @@ dotfiles() {
     git clone --bare https://github.com/h31sn0w/archusb-dotfiles.git /home/h31s/.cfg
     git --git-dir=/home/h31s/.cfg/ --work-tree=/home/h31s/ checkout
     git --git-dir=/home/h31s/.cfg/ --work-tree=/home/h31s/ config status.showUntrackedFiles no
-    sudo -u h31s paru -S --needed - < /home/h31s/.packages
+    sudo -u h31s paru -S --noconfirm --needed - < /home/h31s/.packages
 }
 
 set -e
