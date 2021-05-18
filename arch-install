@@ -91,6 +91,12 @@ options cryptdevice=LABEL=arch_os:h31s root=/dev/mapper/h31s rw
 EOF
 }
 
+dotfiles() {
+    git clone --bare https://github.com/h31sn0w/archusb-dotfiles.git /home/h31s/.cfg
+    git --git-dir=/home/h31s/.cfg/ --work-tree=/home/h31s/ checkout
+    git --git-dir=/home/h31s/.cfg/ --work-tree=/home/h31s/ config status.showUntrackedFiles no
+}
+
 set -e
 
 if [ "$1" == "chroot" ]
@@ -102,6 +108,7 @@ then
     passwd
     user
     install_paru
+    dotfiles
     rm -f /mnt/arch-install
 else
     prepare_disk
